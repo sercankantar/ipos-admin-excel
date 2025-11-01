@@ -24,11 +24,21 @@ export async function GET(req: NextRequest) {
     let columns: string[] = []
     if (uploadId) {
       const up = await prisma.upload.findUnique({ where: { id: uploadId }, select: { columnsOrder: true } })
-      if (up?.columnsOrder) columns = up.columnsOrder.filter((h: any) => !!h && !/^empty(\s|\d)*$/i.test(String(h).trim()))
+      if (up?.columnsOrder && Array.isArray(up.columnsOrder)) {
+        columns = (up.columnsOrder as unknown[])
+          .map((h) => (h == null ? '' : String(h)))
+          .map((h) => h.trim())
+          .filter((h) => !!h && !/^empty(\s|\d)*$/i.test(h))
+      }
     }
     if (!columns.length) {
       const last = await prisma.upload.findFirst({ orderBy: { createdAt: 'desc' }, select: { columnsOrder: true } })
-      if (last?.columnsOrder) columns = last.columnsOrder.filter((h: any) => !!h && !/^empty(\s|\d)*$/i.test(String(h).trim()))
+      if (last?.columnsOrder && Array.isArray(last.columnsOrder)) {
+        columns = (last.columnsOrder as unknown[])
+          .map((h) => (h == null ? '' : String(h)))
+          .map((h) => h.trim())
+          .filter((h) => !!h && !/^empty(\s|\d)*$/i.test(h))
+      }
     }
 
     if (!filters) {
