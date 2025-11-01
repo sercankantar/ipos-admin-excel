@@ -79,12 +79,16 @@ function escapeHtml(input: string): string {
 }
 
 async function renderHtmlToPdf(html: string): Promise<Uint8Array> {
-  // puppeteer runtime import (dinamik)
-  const puppeteer = await import('puppeteer')
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  } as any)
+  // serverless chromium + puppeteer-core
+  const chromium = await import('@sparticuz/chromium')
+  const puppeteer = await import('puppeteer-core')
+  const executablePath = await (chromium as any).executablePath()
+  const browser = await (puppeteer as any).launch({
+    headless: true,
+    args: [...(chromium as any).args, '--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath,
+    defaultViewport: { width: 1280, height: 800, deviceScaleFactor: 1 },
+  })
   try {
     const page = await browser.newPage()
     await page.setContent(html, { waitUntil: 'networkidle0' })
