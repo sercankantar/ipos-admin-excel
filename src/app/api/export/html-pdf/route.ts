@@ -53,7 +53,10 @@ export async function POST(req: NextRequest) {
 </html>`
 
     const pdfBytes = await renderHtmlToPdf(html)
-    return new NextResponse(pdfBytes, {
+    const arrayBuffer = new ArrayBuffer(pdfBytes.byteLength)
+    new Uint8Array(arrayBuffer).set(pdfBytes)
+    const blob = new Blob([arrayBuffer], { type: 'application/pdf' })
+    return new NextResponse(blob, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': 'attachment; filename="filtre-sonucu.pdf"',
