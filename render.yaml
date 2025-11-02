@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: ipos-admin-excel
+    env: node
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+# Not: Render.com free tier'da cron job desteği yok
+# Bu nedenle üçüncü parti bir cron servisi kullanmanız gerekiyor
+# Önerilen servisler:
+# - https://cron-job.org (Ücretsiz)
+# - https://www.easycron.com (Ücretsiz plan mevcut)
+# - https://cronitor.io (Ücretsiz plan mevcut)
+#
+# Cron job ayarı:
+# URL: https://your-app.onrender.com/api/health
+# Schedule: Her 10-14 dakikada bir (örn: */14 * * * *)
+# Method: GET
+

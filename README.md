@@ -32,3 +32,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Render.com'da Uyku Modunu Önleme
+
+Render.com free tier'da uygulamalar 15 dakika trafik olmazsa uykuya düşer. Uygulamanın sürekli aktif kalması için bir cron job kurmanız gerekiyor.
+
+### Adımlar:
+
+1. **Ücretsiz Cron Servisi Seçin:**
+   - [cron-job.org](https://cron-job.org) (Önerilen - tamamen ücretsiz)
+   - [easycron.com](https://www.easycron.com)
+   - [cronitor.io](https://cronitor.io)
+
+2. **Cron Job Oluşturun:**
+   - **URL:** `https://your-app-name.onrender.com/api/health`
+   - **Schedule:** Her 10-14 dakikada bir (örn: `*/14 * * * *`)
+   - **Method:** GET
+   - **Timeout:** 30 saniye
+
+3. **cron-job.org Örneği:**
+   - Hesap oluşturun ve giriş yapın
+   - "Create cronjob" butonuna tıklayın
+   - URL alanına health endpoint'inizi girin
+   - Schedule: `*/14 * * * *` (her 14 dakikada bir)
+   - Active seçeneğini işaretleyin
+   - Kaydedin
+
+Artık uygulamanız sürekli aktif kalacak ve uyku moduna düşmeyecek!
