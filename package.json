@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "create-admin": "tsx --env-file=.env src/scripts/create-admin.ts",
+    "keep-alive": "tsx src/scripts/keep-alive.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {

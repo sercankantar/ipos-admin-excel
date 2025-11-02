@@ -33,29 +33,27 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Render.com'da Uyku Modunu Önleme
+## 🚀 Render.com'da Uyku Modunu Önleme
 
-Render.com free tier'da uygulamalar 15 dakika trafik olmazsa uykuya düşer. Uygulamanın sürekli aktif kalması için bir cron job kurmanız gerekiyor.
+Render.com free tier'da uygulamalar **15 dakika** trafik olmazsa uykuya düşer. Uygulamanızın sürekli aktif kalması için bir cron job kurmanız gerekiyor.
 
-### Adımlar:
+### ⚡ Hızlı Çözüm (Önerilen)
 
-1. **Ücretsiz Cron Servisi Seçin:**
-   - [cron-job.org](https://cron-job.org) (Önerilen - tamamen ücretsiz)
-   - [easycron.com](https://www.easycron.com)
-   - [cronitor.io](https://cronitor.io)
+**Detaylı kurulum rehberi için:** [`CRON_SETUP.md`](./CRON_SETUP.md) dosyasına bakın.
 
-2. **Cron Job Oluşturun:**
-   - **URL:** `https://your-app-name.onrender.com/api/health`
-   - **Schedule:** Her 10-14 dakikada bir (örn: `*/14 * * * *`)
+#### Adımlar:
+
+1. **[cron-job.org](https://cron-job.org)** adresine gidin ve ücretsiz hesap oluşturun
+2. Yeni cron job oluşturun:
+   - **URL:** `https://ipos-admin-excel.onrender.com/api/health` (kendi uygulama adınızı yazın)
+   - **Schedule:** `*/14 * * * *` (her 14 dakikada bir)
    - **Method:** GET
-   - **Timeout:** 30 saniye
+   - **Active:** ✅ İşaretli
+3. Kaydedin ve aktif hale getirin
 
-3. **cron-job.org Örneği:**
-   - Hesap oluşturun ve giriş yapın
-   - "Create cronjob" butonuna tıklayın
-   - URL alanına health endpoint'inizi girin
-   - Schedule: `*/14 * * * *` (her 14 dakikada bir)
-   - Active seçeneğini işaretleyin
-   - Kaydedin
+Artık uygulamanız sürekli aktif kalacak! 🎉
 
-Artık uygulamanız sürekli aktif kalacak ve uyku moduna düşmeyecek!
+### 📋 Alternatif Yöntemler
+
+- **Background Worker:** `render.yaml` dosyasında worker servisi tanımlanmıştır (free tier'da da uyuyabilir)
+- **Diğer Servisler:** easycron.com, cronitor.io, UptimeRobot
