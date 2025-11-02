@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient, Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import { parseExcel, hashBuffer, normalizeRowKeys } from '@/lib/excel/parse'
+import { prisma } from '@/lib/db'
 
-const prisma = new PrismaClient()
 export const runtime = 'nodejs'
 export const maxDuration = 60
 
